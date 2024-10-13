@@ -1,0 +1,10 @@
+<h2>shopping list</h2>
+
+<ul *ngFor="let item of items">
+    <li>
+        <span>{{item.amount}} und - {{item.name}}</span>
+        <button (click)="removeItem()">Remover</button>
+    </li>
+</ul>
+
+<br><hr>

@@ -1,0 +1,9 @@
+<label for="name">Nome do item</label>
+<br>
+<input type="text" [(ngModel)]="name" name="name" id="name">
+
+<br>
+<label for="name">Quantidade</label>
+<br>
+<input type="number" [min]="0" [(ngModel)]="amount" name="name" id="name">
+<button (click)="addItem()">Adicinar</button>
