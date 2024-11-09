@@ -14,3 +14,7 @@ export const loadShoppingListError = createAction(
     '[Shopping List] Load shopping list error',
 );
 
+export const addItemShoppingList = createAction(
+    '[Shopping List] add an item to shopping list',
+    props<{item: Item}>()
+) 

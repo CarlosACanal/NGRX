@@ -1,10 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { loadShoppingList } from '../store/shopping-list.actions';
+import { addItemShoppingList, loadShoppingList } from '../store/shopping-list.actions';
+import { getShoppingList, getShoppingListIsLoading } from '../store/shopipng-list.selectors';
 
 export interface Item {
-  name:string;
+  id?: number;
+  name: string;
   amount: number;
 }
 
@@ -16,12 +18,18 @@ export interface Item {
   styleUrls: ['./shopping-list.component.scss']
 })
 export class ShoppingListComponent implements OnInit {
-  @Input() items?:Item[] = [{amount: 3, name: 'rexona'}]
+  @Input() items?: Item[] = [];
+  shoppingList$ = this.store.select(getShoppingList);
+  loadingList$ = this.store.select(getShoppingListIsLoading);
 
-  constructor(private store: Store) {}
+  constructor(private store: Store) { }
 
   removeItem() {
 
+  }
+
+  addItem(): void {
+    this.store.dispatch(addItemShoppingList({item: {amount:2, name:'dasjidj'}}))
   }
 
   ngOnInit(): void {

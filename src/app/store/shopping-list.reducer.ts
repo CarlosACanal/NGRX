@@ -1,4 +1,4 @@
-import { loadShoppingList, loadShoppingListError, loadShoppingListSuccess } from './shopping-list.actions';
+import { addItemShoppingList, loadShoppingList, loadShoppingListError, loadShoppingListSuccess } from './shopping-list.actions';
 import { createReducer, on } from "@ngrx/store";
 import { ShoppingListState } from "./shopping-list.state";
 
@@ -23,5 +23,11 @@ export const shoppingListReducer = createReducer(
     on(loadShoppingListError, (state) => ({
         ...state,
         isLoading: false
-    }))
+    })),
+
+    on(addItemShoppingList, (state, { item } ) => ({
+        ...state,
+        entities: [...state.entities, item], //já sobreescreve por ter o mesmo nome
+        isLoading: false
+    })),
 )

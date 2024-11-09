@@ -3,6 +3,8 @@ import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
 import { SelectCount } from './counter/selectors/counter.selectors';
 import { decrement, increment } from './counter/actions/counter.actions';
+import { Item } from './shopping-list/shopping-list.component';
+import { getShoppingList } from './store/shopipng-list.selectors';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +14,11 @@ import { decrement, increment } from './counter/actions/counter.actions';
 export class AppComponent {
   title = 'ngrx';
   count$: Observable<number>;
+  list$: Observable<Item[]>
 
-  constructor(private store: Store<{ count: number }>) {
+  constructor(private store: Store) {
     this.count$ = this.store.select(SelectCount);
-
+    this.list$ = this.store.select(getShoppingList);
   }
 
   onIncrement() {
@@ -25,5 +28,5 @@ export class AppComponent {
   onDecrement() {
     this.store.dispatch(decrement());
   }
-  
+
 }

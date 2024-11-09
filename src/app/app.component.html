@@ -8,6 +8,6 @@
 
 <br><hr>
 
-<app-shopping-list></app-shopping-list>
+<app-shopping-list *ngIf="list$ | async as list" [items]="list"></app-shopping-list>
 
 <app-add-item></app-add-item>
