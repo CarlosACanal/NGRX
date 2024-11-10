@@ -1,9 +1,9 @@
 <h2>shopping list</h2>
 
-<ul *ngIf="(shoppingList$ |async) as shoppingList">
+<ul *ngIf="(shoppingList$ | async) as shoppingList">
     <li *ngFor="let item of shoppingList">
         <span>{{item.amount}} und - {{item.name}}</span>
-        <button (click)="removeItem()">Remover</button>
+        <button (click)="removeItem(item)">Remover</button>
     </li>
 </ul>
 
@@ -11,6 +11,5 @@
     <p>...Carregando lista</p>
 </div>
 
-<button (click)="addItem()">adicionar</button>
 
 <br><hr>

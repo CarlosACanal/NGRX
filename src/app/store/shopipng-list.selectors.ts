@@ -12,3 +12,8 @@ export const getShoppingListIsLoading = createSelector(
     getShoppingListState,
     (state: ShoppingListState) => state.isLoading
 );
+
+export const getShoppingListItemIsSaving = createSelector(
+    getShoppingListState,
+    (state: ShoppingListState) => state.isSaving
+)

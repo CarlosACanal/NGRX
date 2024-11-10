@@ -7,3 +7,5 @@
 <br>
 <input type="number" [min]="0" [(ngModel)]="amount" name="name" id="name">
 <button (click)="addItem()">Adicinar</button>
+
+<p *ngIf="isSaving$ | async">Salvando item {{name}} na lista...</p>
