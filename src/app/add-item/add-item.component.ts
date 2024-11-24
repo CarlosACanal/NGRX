@@ -1,7 +1,8 @@
-import { addItemShoppingList } from './../store/shopping-list.actions';
+
 import { Component, inject, Signal } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { getShoppingListItemIsSaving } from '../store/shopipng-list.selectors';
+import { ShoppingListActions } from '../store/shopping-list.actions';
 
 @Component({
   selector: 'app-add-item',
@@ -16,7 +17,7 @@ export class AddItemComponent {
   constructor(private store: Store) { }
 
   addItem() {
-    this.store.dispatch(addItemShoppingList(
+    this.store.dispatch(ShoppingListActions.addItem(
       {
         item: {
           name: this.name,

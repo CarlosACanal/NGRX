@@ -2,18 +2,18 @@ import { Item } from 'src/app/shopping-list/shopping-list.component';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { Injectable } from '@angular/core';
 import { ShoppingListService } from '../shopping-list/shopping-list.service';
-import { addItemShoppingList, addItemShoppingListError, addItemShoppingListSuccess, loadShoppingList, loadShoppingListError, loadShoppingListSuccess, removeItemShoppingList, removeItemShoppingListError, removeItemShoppingListSuccess } from './shopping-list.actions';
 import { catchError, delay, map, mergeMap, of, switchMap } from 'rxjs';
+import { ShoppingListActions } from './shopping-list.actions';
 
 @Injectable()
 export class shoppingListEffects {
   loadShoppingList$ = createEffect(() =>
     this.actions$.pipe(
-      ofType(loadShoppingList),
+      ofType(ShoppingListActions.load),
       switchMap(() =>
         this.ShoppingListService.getItems().pipe(
-          map(entities => loadShoppingListSuccess({ entities })),
-          catchError(error => of(loadShoppingListError())
+          map(entities => ShoppingListActions.loadSuccess({ entities })),
+          catchError(error => of(ShoppingListActions.loadError())
           )
         )
       ))
@@ -21,23 +21,23 @@ export class shoppingListEffects {
 
   addShoppingListEffect = createEffect(() =>
     this.actions$.pipe(
-      ofType(addItemShoppingList),
+      ofType(ShoppingListActions.addItem),
       delay(2000),
       mergeMap(({ item }) =>
         this.ShoppingListService.addItem(item).pipe(
-          map(item => addItemShoppingListSuccess({ item })),
-          catchError(() => of(addItemShoppingListError()))
+          map(item => ShoppingListActions.addItemSuccess({ item })),
+          catchError(() => of(ShoppingListActions.addItemError()))
         ))
     )
   );
 
   removeShoppingListEffect = createEffect(() =>
     this.actions$.pipe(
-      ofType(removeItemShoppingList),
+      ofType(ShoppingListActions.removeItem),
       mergeMap(({ item }) =>
         this.ShoppingListService.removeItem(item).pipe(
-          map(() => removeItemShoppingListSuccess()),
-          catchError(() => of(removeItemShoppingListError({ item })))
+          map(() => ShoppingListActions.removeItemSuccess()),
+          catchError(() => of(ShoppingListActions.removeItemError({ item })))
         ))
     ))
 

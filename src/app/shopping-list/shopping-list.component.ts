@@ -1,8 +1,8 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, inject, Input, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { addItemShoppingList, loadShoppingList, removeItemShoppingList } from '../store/shopping-list.actions';
 import { getShoppingList, getShoppingListIsLoading } from '../store/shopipng-list.selectors';
+import { ShoppingListActions } from '../store/shopping-list.actions';
 
 export interface Item {
   id: number;
@@ -19,17 +19,18 @@ export interface Item {
 })
 export class ShoppingListComponent implements OnInit {
   @Input() items?: Item[] = [];
+
+  private store = inject(Store);
+
   shoppingList$ = this.store.select(getShoppingList);
   loadingList$ = this.store.select(getShoppingListIsLoading);
 
-  constructor(private store: Store) { }
-
   removeItem(item: Item) {
-    this.store.dispatch(removeItemShoppingList({ item }))
+    this.store.dispatch(ShoppingListActions.removeItem({ item }))
   }
 
 
   ngOnInit(): void {
-    this.store.dispatch(loadShoppingList());
+    this.store.dispatch(ShoppingListActions.load());
   }
 }

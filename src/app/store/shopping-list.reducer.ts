@@ -1,6 +1,7 @@
-import { addItemShoppingList, addItemShoppingListError, addItemShoppingListSuccess, loadShoppingList, loadShoppingListError, loadShoppingListSuccess, removeItemShoppingList, removeItemShoppingListError, removeItemShoppingListSuccess } from './shopping-list.actions';
+
 import { createReducer, on } from "@ngrx/store";
 import { ShoppingListState } from "./shopping-list.state";
+import { ShoppingListActions } from "./shopping-list.actions";
 
 export const initialState: ShoppingListState = {
     entities: [],
@@ -13,53 +14,53 @@ export const shoppingListReducer = createReducer(
     initialState,
     
     //load
-    on(loadShoppingList, (state) => ({
+    on(ShoppingListActions.load, (state) => ({
         ...state,
         isLoading: true
     })),
 
-    on(loadShoppingListSuccess, (state, { entities }) => ({
+    on(ShoppingListActions.loadSuccess, (state, { entities }) => ({
         ...state,
         entities, //já sobreescreve por ter o mesmo nome
         isLoading: false
     })),
 
-    on(loadShoppingListError, (state) => ({
+    on(ShoppingListActions.loadError, (state) => ({
         ...state,
         isLoading: false
     })),
 
     //add
-    on(addItemShoppingList, (state) => ({
+    on(ShoppingListActions.addItem, (state) => ({
         ...state,
         isSaving: true
     })),
 
-    on(addItemShoppingListSuccess, (state, { item }) => ({
+    on(ShoppingListActions.addItemSuccess, (state, { item }) => ({
         ...state,
         entities: [...state.entities, item],
         isSaving: false
     })),
 
-    on(addItemShoppingListError, (state) => ({
+    on(ShoppingListActions.addItemError, (state) => ({
         ...state,
         isSaving: false
     })),
 
     //remove
-    on(removeItemShoppingList, (state, { item }) => ({
+    on(ShoppingListActions.removeItem, (state, { item }) => ({
         ...state,
         entities: state.entities.filter(i => i.id != item.id),
         //Só ficarão os itens com um id diferente do item que queremos excluir
         isDeleting: true
     })),
 
-    on(removeItemShoppingListSuccess, (state) => ({
+    on(ShoppingListActions.removeItemSuccess, (state) => ({
         ...state,
         isDeleting: false
     })),
 
-    on(removeItemShoppingListError, (state, { item }) => ({
+    on(ShoppingListActions.removeItemError, (state, { item }) => ({
         ...state,
         entities: [...state.entities, item],
         isDeleting: false
